@@ -21,6 +21,10 @@ public class VideoItem {
     @SerializedName("avatar")
     private String avatar;
 
+
+    @SerializedName("thumbnails")
+    private String thumbNails;//缩略图
+
     public String getAvatar() {
         return avatar;
     }
@@ -67,5 +71,13 @@ public class VideoItem {
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public String getThumbNails() {
+        return thumbNails;
+    }
+
+    public void setThumbNails(String thumbNails) {
+        this.thumbNails = thumbNails;
     }
 }
