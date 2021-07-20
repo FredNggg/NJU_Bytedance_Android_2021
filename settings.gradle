@@ -1,0 +1,2 @@
+rootProject.name = "Bytedance_Android_2021"
+include ':app'
