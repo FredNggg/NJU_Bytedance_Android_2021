@@ -1,12 +1,16 @@
 package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bytedance_android_2021.R;
+import com.example.bytedance_android_2021.logic.FavouriteLogicModule;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -110,9 +114,31 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                 resolveFullBtn(gsyVideoPlayer);
             }
         });
+        GestureDetector gestureDetector;
 
-//        gsyVideoPlayer.loadCoverImageBy(R.drawable.img_default_movie_h, R.drawable.img_default_movie_h);
+        gestureDetector = new GestureDetector(gsyVideoPlayer.getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e){
+                resolveFullBtn(gsyVideoPlayer);
+                return super.onSingleTapConfirmed(e);
+            }
 
+            @Override
+            public boolean onDoubleTap(MotionEvent e){
+                //收藏逻辑
+                FavouriteLogicModule instance = FavouriteLogicModule.getInstance();
+                instance.setFavourite(videoModel, getPlayer().getContext());
+                return true;
+            }
+
+        });
+
+        gsyVideoPlayer.getFullscreenButton().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
     }
 
     /**
