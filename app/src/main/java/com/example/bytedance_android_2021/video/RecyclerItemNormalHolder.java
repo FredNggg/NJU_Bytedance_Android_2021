@@ -121,10 +121,8 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
             @Override
             public void onClick(View v) {
                 if(FavouriteLogicModule.getInstance().setFavourite(videoModel,context)){
-                    like.setColorFilter(R.color.red);
-                }else{
-                    like.setColorFilter(R.color.white);
-                }
+                    like.setActivated(true);
+                }else{                    like.setActivated(false);                }
             }
         });
     }
