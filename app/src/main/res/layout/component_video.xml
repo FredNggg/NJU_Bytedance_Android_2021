@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                android:text="99.9w+"
+                android:text="99.9w"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                android:text="99.9w+"
+                android:text="99.9w"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                android:text="99.9w+"
+                android:text="99.9w"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -123,7 +123,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_author"
+            android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -140,7 +140,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxEms="200"
-            android:text="愿你出走半生，归来仍是少年。"
+            android:text="2 学分可真难拿呀！"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
