@@ -1,12 +1,11 @@
 package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bytedance_android_2021.R;
@@ -39,8 +38,8 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
     CircleImageView avatar;
     @BindView(R.id.like_count)
     TextView likeCount;
-    @BindView(R.id.nickname)
-    TextView nickname;
+    @BindView(R.id.like_button)
+    ImageButton like;
     ImageView imageView;
 
     GSYVideoOptionBuilder gsyVideoOptionBuilder;
@@ -59,13 +58,11 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         String textContent = videoModel.getDescription();
         String coverUrl = videoModel.getThumbNails();
         String avatarUrl = videoModel.getAvatar();
-        String nickName = videoModel.getNickname();
         int likeCountNum = videoModel.getLikeCount();
         Glide.with(context).load(coverUrl).into(imageView);
         Glide.with(context).load(avatarUrl).into(avatar);
         tvContent.setText(" " + textContent);
         likeCount.setText(numberFilter(likeCountNum));
-        nickname.setText("@" + nickName);
         Map<String, String> header = new HashMap<>();
         header.put("ee", "33");
         // 防止错位，离开释放
@@ -117,30 +114,17 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
             public void onClick(View v) {
                 resolveFullBtn(gsyVideoPlayer);
             }
-        });
-        GestureDetector gestureDetector;
-
-        gestureDetector = new GestureDetector(gsyVideoPlayer.getContext(), new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent e) {
-                resolveFullBtn(gsyVideoPlayer);
-                return super.onSingleTapConfirmed(e);
-            }
-
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                //收藏逻辑
-                FavouriteLogicModule instance = FavouriteLogicModule.getInstance();
-                instance.setFavourite(videoModel, getPlayer().getContext());
-                return true;
-            }
 
         });
 
-        gsyVideoPlayer.getFullscreenButton().setOnTouchListener(new View.OnTouchListener() {
+        like.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
+            public void onClick(View v) {
+                if(FavouriteLogicModule.getInstance().setFavourite(videoModel,context)){
+                    like.setColorFilter(R.color.red);
+                }else{
+                    like.setColorFilter(R.color.white);
+                }
             }
         });
     }
@@ -154,19 +138,18 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
     /**
      * 实现点赞数的转化
-     *
      * @param number
      * @return
      */
-    public String numberFilter(int number) {
+    public static String numberFilter(int number) {
         if (number > 9999 && number <= 999999) {  //数字上万，小于百万，保留一位小数点
-            DecimalFormat df2 = new DecimalFormat("#0.0");
+            DecimalFormat df2 = new DecimalFormat("##.#");
             String format = df2.format((float) number / 10000);
             return format + "w";
         } else if (number > 999999 && number < 99999999) {  //百万到千万不保留小数点
             return number / 10000 + "w";
         } else if (number > 99999999) { //上亿
-            DecimalFormat df2 = new DecimalFormat("00.0");
+            DecimalFormat df2 = new DecimalFormat("##.#");
             String format = df2.format((float) number / 100000000);
             return format + "e+";
         } else {

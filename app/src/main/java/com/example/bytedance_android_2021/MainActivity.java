@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }).start();
         loadThread.start();
+
     }
     Handler videoHandler = new Handler() {
         @Override

@@ -26,12 +26,14 @@ public class FavouriteLogicModule {
         editor.putString(item.getId(),"true");
         editor.apply();
             Toast.makeText(context,"收藏成功！",Toast.LENGTH_SHORT).show();
+            return true;
         }else{
             editor.remove(item.getId());
             Toast.makeText(context,"取消收藏成功！",Toast.LENGTH_SHORT).show();
+            editor.apply();
+            return false;
         }
 
-        return true;
     }
 
     public List<VideoItem> getFavourite(Context context){
