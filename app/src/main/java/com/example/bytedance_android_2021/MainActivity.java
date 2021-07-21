@@ -1,26 +1,26 @@
 package com.example.bytedance_android_2021;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.bytedance_android_2021.video.RecyclerItemNormalHolder;
+import com.example.bytedance_android_2021.video.VideoFetcher;
+import com.example.bytedance_android_2021.video.VideoItem;
+import com.example.bytedance_android_2021.video.ViewPagerAdapter;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
-import java.io.DataInput;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,13 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
     private List<VideoItem> mList = new ArrayList<>();
     private ViewPagerAdapter viewPagerAdapter;
-
+    private LoadThread loadThread = new LoadThread(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setContentView(R.layout.activity_main);
+        VideoFetcher.getVideos();
         ButterKnife.bind(this);
-        getData();
+//        getData();
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -43,6 +46,41 @@ public class MainActivity extends AppCompatActivity {
 //                getData();
 //            }
 //        }).start();
+        loadThread.start();
+    }
+    Handler videoHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    getData();
+            }
+        }
+    };
+
+    class LoadThread extends Thread{
+        private Context current;
+        public LoadThread(Context context){
+            super();
+            current = context;
+        }
+
+        @Override
+        public void run(){
+            super.run();
+            while(VideoFetcher.videoItems == null){
+                try {
+                    sleep(10);
+                }catch (InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
+            Message message = new Message();
+            message.what = 1;
+            videoHandler.sendMessage(message);
+
+        }
     }
 
     private void getData() {
@@ -105,17 +143,19 @@ public class MainActivity extends AppCompatActivity {
 //            public void onFailure(Call<List<VideoItem>> call, Throwable t) {
 //                Log.d("retrofit", t.getMessage());
 //            }
-//        });
-        VideoItem v1 = new VideoItem();
-        v1.setId("5e9830b0ce330a0248e89d86");
-        v1.setFeedUrl("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.mp4");
-        v1.setNickname("王火火");
-        v1.setLikeCount(10000);
-        v1.setAvatar("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202005%2F06%2F20200506110929_iajqi.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1629274593&t=11f8a7e63296c9e3e8e0978f253c44c3");
-        v1.setThumbNails("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.jpg");
-
-        mList.add(v1);
-        mList.add(v1);
+////        });
+//        VideoItem v1 = new VideoItem();
+//        v1.setId("5e9830b0ce330a0248e89d86");
+//        v1.setFeedUrl("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.mp4");
+//        v1.setNickname("王火火");
+//        v1.setLikeCount(10000);
+//        v1.setAvatar("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202005%2F06%2F20200506110929_iajqi.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1629274593&t=11f8a7e63296c9e3e8e0978f253c44c3");
+//        v1.setThumbNails("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.jpg");
+//
+//        mList.add(v1);
+//        mList.add(v1);
+        VideoFetcher.getVideos();
+        mList= VideoFetcher.videoItems;
         //TODO
         // 网络请求数据（照下面这么做都有 bug）、根据 videoItem 数据修改界面的相关参数（头像、Description）
 

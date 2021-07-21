@@ -1,4 +1,4 @@
-package com.example.bytedance_android_2021;
+package com.example.bytedance_android_2021.video;
 
 import java.util.List;
 

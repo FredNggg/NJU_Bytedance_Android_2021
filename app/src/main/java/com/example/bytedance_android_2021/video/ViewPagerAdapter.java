@@ -1,4 +1,4 @@
-package com.example.bytedance_android_2021;
+package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bytedance_android_2021.R;
 
 import org.jetbrains.annotations.NotNull;
 

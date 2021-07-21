@@ -1,4 +1,4 @@
-package com.example.bytedance_android_2021;
+package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
 import android.view.View;
@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.bytedance_android_2021.R;
-import com.example.bytedance_android_2021.VideoItem;
-import com.example.bytedance_android_2021.SampleCoverVideo;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;

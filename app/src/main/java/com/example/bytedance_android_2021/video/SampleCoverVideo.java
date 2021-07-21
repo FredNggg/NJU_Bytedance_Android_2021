@@ -1,4 +1,4 @@
-package com.example.bytedance_android_2021;
+package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.bytedance_android_2021.R;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
