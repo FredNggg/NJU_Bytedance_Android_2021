@@ -12,11 +12,13 @@ import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
@@ -29,7 +31,10 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
     SampleCoverVideo gsyVideoPlayer;
     @BindView(R.id.tv_content)
     TextView tvContent;
-
+    @BindView(R.id.user_photo_view)
+    CircleImageView avatar;
+    @BindView(R.id.like_count)
+    TextView likeCount;
     ImageView imageView;
 
     GSYVideoOptionBuilder gsyVideoOptionBuilder;
@@ -47,11 +52,12 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         String videoUrl = videoModel.getFeedUrl();
         String textContent = videoModel.getDescription();
         String coverUrl = videoModel.getThumbNails();
-
-        Glide.with(context).load(videoModel.getThumbNails()).into(imageView);
-
+        String avatarUrl = videoModel.getAvatar();
+        int likeCountNum = videoModel.getLikeCount();
+        Glide.with(context).load(coverUrl).into(imageView);
+        Glide.with(context).load(avatarUrl).into(avatar);
         tvContent.setText(" " + textContent);
-
+        likeCount.setText(numberFilter(likeCountNum));
         Map<String, String> header = new HashMap<>();
         header.put("ee", "33");
         // 防止错位，离开释放
@@ -114,6 +120,27 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
      */
     private void resolveFullBtn(final StandardGSYVideoPlayer standardGSYVideoPlayer) {
         standardGSYVideoPlayer.startWindowFullscreen(context, true, true);
+    }
+
+    /**
+     * 实现点赞数的转化
+     * @param number
+     * @return
+     */
+    public static String numberFilter(int number) {
+        if (number > 9999 && number <= 999999) {  //数字上万，小于百万，保留一位小数点
+            DecimalFormat df2 = new DecimalFormat("##.#");
+            String format = df2.format((float) number / 10000);
+            return format + "w";
+        } else if (number > 999999 && number < 99999999) {  //百万到千万不保留小数点
+            return number / 10000 + "w";
+        } else if (number > 99999999) { //上亿
+            DecimalFormat df2 = new DecimalFormat("##.#");
+            String format = df2.format((float) number / 100000000);
+            return format + "e+";
+        } else {
+            return number + "";
+        }
     }
 
     public SampleCoverVideo getPlayer() {

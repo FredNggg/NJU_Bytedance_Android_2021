@@ -52,6 +52,7 @@
                 android:background="@drawable/icon_like"
                 />
             <TextView
+                android:id="@+id/like_count"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -127,7 +128,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxEms="20"
-            android:text=" @_彼岸雨敲窗_"
+            android:text=" @Android 应用开发"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

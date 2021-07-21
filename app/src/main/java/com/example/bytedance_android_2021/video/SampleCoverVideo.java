@@ -92,7 +92,6 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
 
     @Override
     public GSYBaseVideoPlayer showSmallVideo(Point size, boolean actionBar, boolean statusBar) {
-        //下面这里替换成你自己的强制转化
         SampleCoverVideo sampleCoverVideo = (SampleCoverVideo) super.showSmallVideo(size, actionBar, statusBar);
         sampleCoverVideo.mStartButton.setVisibility(GONE);
         sampleCoverVideo.mStartButton = null;
