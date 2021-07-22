@@ -96,9 +96,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/share"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/icon_forward" />
+                android:src="@drawable/icon_forward"
+                android:scaleType="centerInside"/>
 
             <TextView
                 android:layout_width="40dp"

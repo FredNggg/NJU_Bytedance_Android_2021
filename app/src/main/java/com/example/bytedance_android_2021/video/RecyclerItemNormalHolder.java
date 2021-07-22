@@ -1,6 +1,8 @@
 package com.example.bytedance_android_2021.video;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -42,6 +44,8 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
     ImageButton like;
     @BindView(R.id.nickname)
     TextView nickname;
+    @BindView(R.id.share)
+    ImageView share;
     ImageView imageView;
 
     GSYVideoOptionBuilder gsyVideoOptionBuilder;
@@ -108,7 +112,6 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
         //增加title
         gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
-
         //设置返回键
         gsyVideoPlayer.getBackButton().setVisibility(View.GONE);
 
@@ -129,6 +132,30 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                 }else{                    like.setActivated(false);                }
             }
         });
+
+        //视频分享，目前只支持分享链接
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder shareContent = new StringBuilder();
+                String[] header = {"这视频属实让我爆笑如雷了家人们，不快点进来看看？"
+                        ,"我刚看了个视频，只能说让人很难绷得住，你也可以来看看"
+                        ,"拼多多帮我拼一刀"};
+                shareContent.append(header[(int) (3*Math.random())])
+                        .append(":")
+                        .append(videoUrl)
+                        .append(" 作者：")
+                        .append(nickName);
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,shareContent.toString());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent,"分享到..."));
+
+            }
+        });
+
     }
 
     /**

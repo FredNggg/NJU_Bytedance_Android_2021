@@ -38,16 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         VideoFetcher.getVideos();
         ButterKnife.bind(this);
-//        getData();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //dataCreate.getData();
-//                getData();
-//            }
-//        }).start();
         loadThread.start();
-
     }
     Handler videoHandler = new Handler() {
         @Override
@@ -123,63 +114,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 模拟数据
-     */
     private void setData() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://beiyou.bytedance.com/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        ApiService apiService = retrofit.create(ApiService.class);
-//        apiService.getVideos().enqueue(new Callback<List<VideoItem>>() {
-//            @Override
-//            public void onResponse(Call<List<VideoItem>> call, Response<List<VideoItem>> response) {
-//                if (response.body() != null) {
-//                    mList = (List<VideoItem>) response.body();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<VideoItem>> call, Throwable t) {
-//                Log.d("retrofit", t.getMessage());
-//            }
-////        });
-//        VideoItem v1 = new VideoItem();
-//        v1.setId("5e9830b0ce330a0248e89d86");
-//        v1.setFeedUrl("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.mp4");
-//        v1.setNickname("王火火");
-//        v1.setLikeCount(10000);
-//        v1.setAvatar("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202005%2F06%2F20200506110929_iajqi.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1629274593&t=11f8a7e63296c9e3e8e0978f253c44c3");
-//        v1.setThumbNails("http://8.136.101.204/v/%E9%A5%BA%E5%AD%90%E5%A5%BD%E5%A6%88%E5%A6%88.jpg");
-//
-//        mList.add(v1);
-//        mList.add(v1);
         VideoFetcher.getVideos();
         mList= VideoFetcher.videoItems;
-        //TODO
-        // 网络请求数据（照下面这么做都有 bug）、根据 videoItem 数据修改界面的相关参数（头像、Description）
-
-        //        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //dataCreate.getData();
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl("https://beiyou.bytedance.com/")
-//                        .addConverterFactory(GsonConverterFactory.create()) //添加Gson
-//                        .build();
-//
-//                ApiService apiService = retrofit.create(ApiService.class);
-//                Call<List<VideoItem>> call = apiService.getVideos();
-//
-//                try {
-//                    List<VideoItem> temp = call.execute().body();
-//                    mList = temp;
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
     }
 
 }

@@ -105,7 +105,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/video_title_bg"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
@@ -114,6 +115,8 @@
             android:paddingLeft="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/video_back" />
+
+
 
         <TextView
             android:id="@+id/title"
