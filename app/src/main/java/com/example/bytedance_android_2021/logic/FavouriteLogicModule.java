@@ -40,17 +40,6 @@ public class FavouriteLogicModule {
 
     }
 
-    public List<VideoItem> getFavourite(Context context){
-        SharedPreferences favourites = context.getSharedPreferences("Favourites",Context.MODE_PRIVATE);
-
-        List<VideoItem> favouritesItems=new ArrayList<VideoItem>();
-        List<VideoItem> whole = VideoFetcher.videoItems;
-        for(VideoItem item:whole){
-            if (favourites.getString(item.getId(),null)!=null)
-                favouritesItems.add(item);
-        }
-        return favouritesItems;
-    }
 
     public boolean isFavourite(Context context,VideoItem videoItem){
         SharedPreferences favourites = context.getSharedPreferences("Favourites",Context.MODE_PRIVATE);

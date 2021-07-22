@@ -109,7 +109,7 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                     }
                 }).build(gsyVideoPlayer);
 
-
+        like.setActivated(FavouriteLogicModule.getInstance().isFavourite(context,videoModel));
         //增加title
         gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
         //设置返回键
@@ -129,9 +129,11 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
             public void onClick(View v) {
                 if(FavouriteLogicModule.getInstance().setFavourite(videoModel,context)){
                     like.setActivated(true);
-                }else{                    like.setActivated(false);                }
+                }else{
+                    like.setActivated(false);                }
             }
         });
+
 
         //视频分享，目前只支持分享链接
         share.setOnClickListener(new View.OnClickListener() {
